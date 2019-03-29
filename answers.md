@@ -160,17 +160,99 @@ Your custom metric with the rollup function applied to sum up all the points for
  }}
  
 Please be sure, when submitting your hiring challenge, to include the script that you've used to create this Timeboard.
-Used Postman to run a POST POST -H "Content-type: application/json" -d @dashboard.json "https://api.datadoghq.com/api/v1/dashboard?app_key=04d117a9f3b1e1728cdf7738a20bc3062f2ff7d6&api_key=49514af82afd9cde0bd302ba37201f49"
+Used Postman to run a POST POST "https://api.datadoghq.com/api/v1/dashboard?app_key=04d117a9f3b1e1728cdf7738a20bc3062f2ff7d6&api_key=49514af82afd9cde0bd302ba37201f49"
 ![Screenshot](https://www.dropbox.com/s/6cyt2byvj0z3yng/dashboard.PNG?dl=0)
 Once this is created, access the Dashboard from your Dashboard List in the UI:
 
 Set the Timeboard's timeframe to the past 5 minutes
 
 Take a snapshot of this graph and use the @ notation to send it to yourself.
+
 ![Screenshot](https://www.dropbox.com/s/q044p8q3k3ecml4/notify.PNG?dl=0)
+
+[Screenshot](https://www.dropbox.com/s/npje1oxyhkrkc5h/dashboardPostman.PNG?dl=0)
+
 Bonus Question: What is the Anomaly graph displaying?
 It is displaying the normal behaviour and it adapts over time. The more time is running, the more the algorith learns and can better identify anomalies
+------------------------------------------------------------------------------------------------------------------------------
+Monitoring Data
+Since you’ve already caught your test metric going above 800 once, you don’t want to have to continually watch this dashboard to be alerted when it goes above 800 again. So let’s make life easier by creating a monitor.
 
+Create a new Metric Monitor that watches the average of your custom metric (my_metric) and will alert if it’s above the following values over the past 5 minutes:
+
+Warning threshold of 500
+Alerting threshold of 800
+And also ensure that it will notify you if there is No Data for this query over the past 10m.
+Please configure the monitor’s message so that it will:
+
+Send you an email whenever the monitor triggers.
+
+Create different messages based on whether the monitor is in an Alert, Warning, or No Data state.
+
+Include the metric value that caused the monitor to trigger and host ip when the Monitor triggers an Alert state.
+
+When this monitor sends you an email notification, take a screenshot of the email that it sends you.
+
+Solution:
+Call: https://api.datadoghq.com/api/v1/monitor?application_key=04d117a9f3b1e1728cdf7738a20bc3062f2ff7d6&api_key=49514af82afd9cde0bd302ba37201f49
+Body:
+{
+	"name": "My_Metric monitor",
+	"type": "metric alert",
+	"query": "avg(last_5m):avg:my_metric{host:ubuntu-xenial} > 800",
+	"message": " @PROCAFORT.AT@GMAIL.COM\n\n{{#is_alert}} My_Metric on {{host.name}} with IP {{host.ip}} is at {{value}},[ALERT] Test custom for alert. {{/is_alert}}\n{{#is_warning}}[TEST] Warning My_Metric is above 500. {{/is_warning}}\n{{#is_no_data}} [TEST] No Data. {{/is_no_data}}",
+	"tags": [
+		"my_metric.monitor"
+	],
+	"options": {
+		"notify_audit": false,
+		"locked": false,
+		"timeout_h": 0,
+		"new_host_delay": 300,
+		"require_full_window": false,
+		"notify_no_data": true,
+		"renotify_interval": "0",
+		"escalation_message": "",
+		"no_data_timeframe": 10,
+		"include_tags": true,
+		"thresholds": {
+			"critical": 800,
+			"warning": 500
+		}
+	}
+}
+
+[Screenshot](https://www.dropbox.com/s/8odu73dbkqvg0lz/monitor.PNG?dl=0)
+[Screenshot] (https://www.dropbox.com/s/vl1pfwvrxgfof3d/monitorEmail.PNG?dl=0)
+[Screenshot](https://www.dropbox.com/s/rfourlbhlmvjpt2/monitorUI.PNG?dl=0)
+
+
+
+Bonus Question: Since this monitor is going to alert pretty often, you don’t want to be alerted when you are out of the office. Set up two scheduled downtimes for this monitor:
+
+
+One that silences it from 7pm to 9am daily on M-F,
+Call:https://api.datadoghq.com/api/v1/downtime?application_key=04d117a9f3b1e1728cdf7738a20bc3062f2ff7d6&api_key=49514af82afd9cde0bd302ba37201f49
+JSON Body:{
+  "scope": "*",
+  "monitor_tags": ["my_metric.monitor"],
+  "message": "My_Metric Monitor notifications silenced Mo-Fri 7pm to 9am",
+  "timezone": "CET",
+  "start": 1555347600,
+  "end": 1555398000,
+  "recurrence": {
+    "type": "weeks",
+    "period": 1,
+    "week_days": ["Mon", "Tue", "Wed", "Thu", "Fri"]     
+  }
+}
+[Screenshot](https://www.dropbox.com/s/uyyq9gc7cwze1uh/downtime.PNG?dl=0)
+
+And one that silences it all day on Sat-Sun.
+[Screenshot](https://www.dropbox.com/s/8kz7nfh0ohrpqyc/downtimeweekend.PNG?dl=0)
+
+Make sure that your email is notified when you schedule the downtime and take a screenshot of that notification.
+[Screenshot](https://www.dropbox.com/s/8hs24ng830yj0tm/downtimeNotification.PNG?dl=0)
 
 
 -------------
