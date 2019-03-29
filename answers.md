@@ -6,23 +6,14 @@ tags:
    - mytag
    - env:prod
    - role:database
+   - test:polflip
+   
+   [screenshot] (https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.PNG?dl=0)
 
 Install a database on your machine (MongoDB, MySQL, or PostgreSQL) and then install the respective Datadog integration for that database.
 I installed directly with
-vagrant@ubuntu-xenial:~$ sudo apt-get install postgresql
-And then, create a role 
-vagrant@ubuntu-xenial:~$   sudo su postgres -c "psql -c \"CREATE ROLE datadog SUPERUSER LOGIN PASSWORD 'datadog'\" "
-and a database instance
-# Create WTM database
-  sudo su postgres -c "createdb -E UTF8 -T template0 --locale=en_US.utf8 -O datadog wtm"
-  
-  createdb database_name
-  
-  vagrant@ubuntu-xenial:~$ sudo apt-get install postgree
-Reading package lists... Done
-Building dependency tree
-Reading state information... Done
-E: Unable to locate package postgree
+
+
 vagrant@ubuntu-xenial:~$ sudo apt-get install postgresql
 Reading package lists... Done
 Building dependency tree
@@ -39,10 +30,7 @@ Selecting previously unselected package postgresql.
 Preparing to unpack .../postgresql_9.5+173ubuntu0.2_all.deb ...
 Unpacking postgresql (9.5+173ubuntu0.2) ...
 Setting up postgresql (9.5+173ubuntu0.2) ...
-vagrant@ubuntu-xenial:~$ plsql
-No command 'plsql' found, did you mean:
- Command 'psql' from package 'postgresql-client-common' (main)
-plsql: command not found
+
 
 vagrant@ubuntu-xenial:~$ sudo passwd postgres
 Enter new UNIX password:
@@ -54,6 +42,11 @@ Password:
 
 postgres@ubuntu-xenial:/home/vagrant$ createdb datadog_db
 postgres@ubuntu-xenial:/home/vagrant$ psql -d datadog_db
+create user datadog with password 'datadog';
+grant SELECT ON pg_stat_database to datadog;
+
+datadog_db-# psql -h localhost -U datadog postgres -c "select * from pg_stat_database LIMIT(1);" && echo -e "\e[0;32mPo
+stgres connection - OK\e[0m" || echo -e "\e[0;31mCannot connect to Postgres\e[0m"
 
 vagrant@ubuntu-xenial:/etc/datadog-agent/conf.d/postgres.d$ sudo vi conf.yaml
  
@@ -62,12 +55,16 @@ vagrant@ubuntu-xenial:/etc/datadog-agent/conf.d/postgres.d$ sudo vi conf.yaml
 instances:
   - host: localhost
     port: 5432
-    username: datadog_co
-    password: datadog_co
-    dbname: datadog_db
+    username: datadog
+    password: datadog
+    
+    [Screenshot](https://www.dropbox.com/s/lvz5mtjfxsacui6/dbintegration.PNG?dl=0)
     
   After configuring the integration, we can see it running on 
   https://app.datadoghq.com/account/settings#integrations/postgres
+  
+  It appears on the integration
+  [Screenshot](https://www.dropbox.com/s/9a2e2fswqephid8/dbintegration2.PNG?dl=0)
   
   And running the datadog-agent status command
       postgres (2.5.0)
@@ -84,6 +81,7 @@ instances:
 Create a custom Agent check that submits a metric named my_metric with a random value between 0 and 1000.
 
 /etc/datadog-agent/checks.d
+import random
 # the following try/except block will make the custom check compatible with any Agent version
 try:
     # first, try to import the base class from old versions of the Agent...
@@ -98,8 +96,8 @@ __version__ = "1.0.0"
 
 class RandomCheck(AgentCheck):
     def check(self, instance):
-        self.gauge('my_metric', random.randinit(0,1000))
-        
+        self.gauge('my_metric', random.randint(0,1000))
+ [Screenshot](https://www.dropbox.com/s/4nlqgxty4ug4frf/my_metric.PNG?dl=0)   
 
 :/etc/datadog-agent/conf.d/my_check.yaml
 init_config:
@@ -111,7 +109,11 @@ instances:
 Change your check's collection interval so that it only submits the metric once every 45 seconds.
 init_config:
 instances:
- -min_collection_interval:45
+ - min_collection_interval: 45
+ [Screenshot](https://www.dropbox.com/s/ydkw4al6jq2mhdw/changeInterval.PNG?dl=0)
+ 
+ As a result, the metric appears on Metric Explorer:
+ [Screenshot](https://www.dropbox.com/s/hgr0f9al00q2gkz/my_metricUI.PNG?dl=0)
 
 Bonus Question Can you change the collection interval without modifying the Python check file you created?
 Yes, this goes in the yaml file
