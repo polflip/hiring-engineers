@@ -1,5 +1,6 @@
 Your answers to the questions go here.
-##Collecting Metrics:
+#Collecting Metrics:
+
 #Add tags in the Agent config file and show us a screenshot of your host and its tags on the Host Map page in Datadog.
 
 Set the host's tags (optional)
@@ -9,7 +10,7 @@ tags:
    - role:database
    - test:polflip
    
-   ![screenshot] (https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.PNG?dl=0)
+   ![Screenshot](https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.PNG?dl=0)
 
 #Install a database on your machine (MongoDB, MySQL, or PostgreSQL) and then install the respective Datadog integration for that database.
 I installed directly with
@@ -79,7 +80,7 @@ instances:
 
   
 
-#Create a custom Agent check that submits a metric named my_metric with a random value between 0 and 1000.
+#Create a custom Agent check that submits a metric named my_metric with a random value between 0 and 1000
 
 /etc/datadog-agent/checks.d
 import random
@@ -91,7 +92,7 @@ except ImportError:
     # ...if the above failed, the check is running in Agent version 6 or later
     from datadog_checks.checks import AgentCheck
 
-# content of the special variable __version__ will be shown in the Agent status page
+ #content of the special variable __version__ will be shown in the Agent status page
 __version__ = "1.0.0"
 
 
