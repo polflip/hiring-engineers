@@ -10,7 +10,7 @@ tags:
    - role:database
    - test:polflip
    
-   ![Screenshot](https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.PNG?dl=0)
+   [Screenshot](https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.PNG?dl=0)
 
 #Install a database on your machine (MongoDB, MySQL, or PostgreSQL) and then install the respective Datadog integration for that database.
 I installed directly with
@@ -66,7 +66,7 @@ instances:
   https://app.datadoghq.com/account/settings#integrations/postgres
   
   It appears on the integration
-  [Screenshot](https://www.dropbox.com/s/9a2e2fswqephid8/dbintegration2.PNG?dl=0)
+ .[Screenshot](https://www.dropbox.com/s/9a2e2fswqephid8/dbintegration2.PNG?dl=0)
   
   And running the datadog-agent status command
       postgres (2.5.0)
@@ -112,10 +112,10 @@ Change your check's collection interval so that it only submits the metric once 
 init_config:
 instances:
  - min_collection_interval: 45
- ![Screenshot](https://www.dropbox.com/s/ydkw4al6jq2mhdw/changeInterval.PNG?dl=0)
+ [Screenshot](https://www.dropbox.com/s/ydkw4al6jq2mhdw/changeInterval.PNG?dl=0)
  
  As a result, the metric appears on Metric Explorer:
- ![Screenshot](https://www.dropbox.com/s/hgr0f9al00q2gkz/my_metricUI.PNG?dl=0)
+ [Screenshot](https://www.dropbox.com/s/hgr0f9al00q2gkz/my_metricUI.PNG?dl=0)
 
 Bonus Question Can you change the collection interval without modifying the Python check file you created?
 Yes, this goes in the yaml file
@@ -249,10 +249,11 @@ JSON Body:{
 [Screenshot](https://www.dropbox.com/s/uyyq9gc7cwze1uh/downtime.PNG?dl=0)
 
 And one that silences it all day on Sat-Sun.
-[Screenshot](https://www.dropbox.com/s/8kz7nfh0ohrpqyc/downtimeweekend.PNG?dl=0)
+[Screenshot](https://www.dropbox.com/s/8kz7nfh0ohrpqyc/downtimeweekend.PNG)
 
 Make sure that your email is notified when you schedule the downtime and take a screenshot of that notification.
-[Screenshot](https://www.dropbox.com/s/8hs24ng830yj0tm/downtimeNotification.PNG?dl=0)
+[Screenshot](https://www.dropbox.com/s/8hs24ng830yj0tm/downtimeNotification.PNG)
 
 
 -------------
+Collecting APM Data
