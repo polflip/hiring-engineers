@@ -1,16 +1,17 @@
 Your answers to the questions go here.
-Collecting Metrics:
-Add tags in the Agent config file and show us a screenshot of your host and its tags on the Host Map page in Datadog.
-# Set the host's tags (optional)
+##Collecting Metrics:
+#Add tags in the Agent config file and show us a screenshot of your host and its tags on the Host Map page in Datadog.
+
+Set the host's tags (optional)
 tags:
    - mytag
    - env:prod
    - role:database
    - test:polflip
    
-   [screenshot] (https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.PNG?dl=0)
+   ![screenshot] (https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.PNG?dl=0)
 
-Install a database on your machine (MongoDB, MySQL, or PostgreSQL) and then install the respective Datadog integration for that database.
+#Install a database on your machine (MongoDB, MySQL, or PostgreSQL) and then install the respective Datadog integration for that database.
 I installed directly with
 
 
@@ -78,11 +79,11 @@ instances:
 
   
 
-Create a custom Agent check that submits a metric named my_metric with a random value between 0 and 1000.
+#Create a custom Agent check that submits a metric named my_metric with a random value between 0 and 1000.
 
 /etc/datadog-agent/checks.d
 import random
-# the following try/except block will make the custom check compatible with any Agent version
+ the following try/except block will make the custom check compatible with any Agent version
 try:
     # first, try to import the base class from old versions of the Agent...
     from checks import AgentCheck
@@ -110,10 +111,10 @@ Change your check's collection interval so that it only submits the metric once 
 init_config:
 instances:
  - min_collection_interval: 45
- [Screenshot](https://www.dropbox.com/s/ydkw4al6jq2mhdw/changeInterval.PNG?dl=0)
+ ![Screenshot](https://www.dropbox.com/s/ydkw4al6jq2mhdw/changeInterval.PNG?dl=0)
  
  As a result, the metric appears on Metric Explorer:
- [Screenshot](https://www.dropbox.com/s/hgr0f9al00q2gkz/my_metricUI.PNG?dl=0)
+ ![Screenshot](https://www.dropbox.com/s/hgr0f9al00q2gkz/my_metricUI.PNG?dl=0)
 
 Bonus Question Can you change the collection interval without modifying the Python check file you created?
 Yes, this goes in the yaml file
@@ -121,55 +122,54 @@ Yes, this goes in the yaml file
 
 
 ------
-Visualizing Data:
-Utilize the Datadog API to create a Timeboard that contains:
+#Visualizing Data:
+#Utilize the Datadog API to create a Timeboard that contains:
 
 Your custom metric scoped over your host.
-I have use curl to post the metric:
+I have use Postman defining the api_key and the app_key there to post the metric:
 And I have created an application key as well on the UI
 procafort_dashboard.json:
-from datadog import initialize, api
 
-options = {
-    'api_key': '6d9ffcce9cd2c6fb20ef4f0085356d1f',
-    'app_key': '<04d117a9f3b1e1728cdf7738a20bc3062f2ff7d6>'
-}
-
-initialize(**options)
-
-title = 'my_dashboard'
-widgets = [{
-    'definition': {
-        'type': 'timeseries',
-        'requests': [
-            {'q': 'avg:my_metric{*}'}
-        ],
-        'title': 'My_Metric'
-    }
-}]
-layout_type = 'ordered'
-description = 'A dashboard with custom metric.'
-is_read_only = True
-notify_list = ['user@domain.com']
-
-A nd then POST it:
-
-
-Any metric from the Integration on your Database with the anomaly function applied.
-postgreql.rows_deleted
-
-Your custom metric with the rollup function applied to sum up all the points for the past hour into one bucket
- {"definition": {
+{
+  "title" : "My_Excercise",
+  "widgets" : [
+    {"definition": {
       "type": "timeseries",
       "requests": [
-        {"q": "avg:mymetric{*}.rollup(sum, 3600)"}
+        {"q": "avg:my_metric{host:ubuntu-xenial}"}
       ],
-      "title": "Sum rollup of mymetric values recorded in the last hour" 
-Please be sure, when submitting your hiring challenge, to include the script that you've used to create this Timeboard.
+      "title": "my_metric"
+    }},
 
+Any metric from the Integration on your Database with the anomaly function applied.
+ {"definition": {
+   "type": "timeseries",
+   "requests": [
+     {"q": "anomalies(avg:postgresql.percent_usage_connections{*}, 'basic', 1)"}
+   ],
+   "title": "Anomaly graph for PostgreSQL connections"
+
+Your custom metric with the rollup function applied to sum up all the points for the past hour into one bucket
+  {"definition": {
+   "type": "timeseries",
+   "requests": [
+     {"q": "avg:my_metric{*}.rollup(sum, 3600)"}
+   ],
+   "title": "Sum rollup of mymetric values recorded in the last hour"
+ }}
+ 
+Please be sure, when submitting your hiring challenge, to include the script that you've used to create this Timeboard.
+Used Postman to run a POST POST -H "Content-type: application/json" -d @dashboard.json "https://api.datadoghq.com/api/v1/dashboard?app_key=04d117a9f3b1e1728cdf7738a20bc3062f2ff7d6&api_key=49514af82afd9cde0bd302ba37201f49"
+![Screenshot](https://www.dropbox.com/s/6cyt2byvj0z3yng/dashboard.PNG?dl=0)
 Once this is created, access the Dashboard from your Dashboard List in the UI:
 
 Set the Timeboard's timeframe to the past 5 minutes
+
 Take a snapshot of this graph and use the @ notation to send it to yourself.
+![Screenshot](https://www.dropbox.com/s/q044p8q3k3ecml4/notify.PNG?dl=0)
 Bonus Question: What is the Anomaly graph displaying?
+It is displaying the normal behaviour and it adapts over time. The more time is running, the more the algorith learns and can better identify anomalies
+
+
+
 -------------
