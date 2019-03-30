@@ -1,24 +1,3 @@
-If you want to apply as a solutions engineer at [Datadog](http://datadog.com) you are in the right spot. Read on, it's fun, I promise.
-
-<a href="http://www.flickr.com/photos/alq666/10125225186/" title="The view from our roofdeck">
-<img src="http://farm6.staticflickr.com/5497/10125225186_825bfdb929.jpg" width="500" height="332" alt="_DSC4652"></a>
-
-## The Exercise
-
-Don’t forget to read the [References](https://github.com/DataDog/hiring-engineers/blob/solutions-engineer/README.md#references)
-
-## Questions
-
-Please provide screenshots and code snippets for all steps.
-
-## Prerequisites - Setup the environment
-
-You can utilize any OS/host that you would like to complete this exercise. However, we recommend one of the following approaches:
-
-* You can spin up a fresh linux VM via Vagrant or other tools so that you don’t run into any OS or dependency issues. [Here are instructions](https://github.com/DataDog/hiring-engineers/blob/solutions-engineer/README.md#vagrant) for setting up a Vagrant Ubuntu VM. We strongly recommend using minimum `v. 16.04` to avoid dependency issues.
-* You can utilize a Containerized approach with Docker for Linux and our dockerized Datadog Agent image.
-
-Then, sign up for Datadog (use “Datadog Recruiting Candidate” in the “Company” field), get the Agent reporting metrics from your local machine.
 
 ## Collecting Metrics:
 
@@ -325,14 +304,14 @@ And then run the instrumented application
 ddtrace-run python flask_app.py
 ```
 This is the screenshot of the flask application
-![Screenshot](https://www.dropbox.com/s/4bx3mzoktpmu3sx/flask.PNG?dl=0)
+![Screenshot](https://www.dropbox.com/s/4bx3mzoktpmu3sx/flask.PNG)
 
 
 * **Bonus Question**: What is the difference between a Service and a Resource?
 A service, in a datadog context, is the application it self, composed by different elements like DB or app Server. and the resource is one single request or call 
 
 Provide a link and a screenshot of a Dashboard with both APM and Infrastructure Metrics.
-![Screenshot](https://www.dropbox.com/s/u2aisc9qem1zqdm/dashboardInfraAPM.PNG)
+![Screenshot](https://www.dropbox.com/s/u2aisc9qem1zqdm/dashboardInfraAPM.png)
 
 
 Please include your fully instrumented app in your submission, as well.
@@ -343,3 +322,4 @@ Datadog has been used in a lot of creative ways in the past. We’ve written som
 
 Is there anything creative you would use Datadog for?
 
+I think health and monitoring should go together. So monitoring health metrics like insuline, sugar, heart freacuency, etc is mandatory in one single platform. All combined and in a unique solution.
