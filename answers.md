@@ -14,7 +14,7 @@ tags:
    ```
    
   ![Screenshot](tags.png)
-  <img src="https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.PNG" alt="tags">
+  
   
 * Install a database on your machine (MongoDB, MySQL, or PostgreSQL) and then install the respective Datadog integration for that database.
 I installed  postgreSQL directly with
@@ -65,13 +65,13 @@ instances:
     password: datadog
 ```    
 
-   ![Screenshot](https://www.dropbox.com/s/lvz5mtjfxsacui6/dbintegration.PNG?dl=0)
+   ![Screenshot](dbintegration.png)
     
   After configuring the integration, we can see it running on 
   https://app.datadoghq.com/account/settings#integrations/postgres
   
   It appears on the integration
- ![Screenshot](https://www.dropbox.com/s/9a2e2fswqephid8/dbintegration2.PNG?dl=0)
+ ![Screenshot](dbintegration2.png)
  
 ``` 
   And running the datadog-agent status command
@@ -105,7 +105,7 @@ class RandomCheck(AgentCheck):
     def check(self, instance):
         self.gauge('my_metric', random.randint(0,1000))
 ```
- ![Screenshot](https://www.dropbox.com/s/4nlqgxty4ug4frf/my_metric.PNG?dl=0)   
+ ![Screenshot](my_metric.png)   
 
 And then the YAML file
  ```
@@ -122,10 +122,10 @@ init_config:
 instances:
  - min_collection_interval: 45
  ```
- ![Screenshot](https://www.dropbox.com/s/ydkw4al6jq2mhdw/changeInterval.PNG)
+ ![Screenshot](changeinterval.png)
  
  As a result, the metric appears on Metric Explorer:
- ![Screenshot](https://www.dropbox.com/s/hgr0f9al00q2gkz/my_metricUI.PNG)
+ ![Screenshot](my_metricUI.png)
 * **Bonus Question** Can you change the collection interval without modifying the Python check file you created?
 Yes, this goes in the yaml file
 
@@ -171,15 +171,15 @@ This is as well the body I have used on Postman
 
 Please be sure, when submitting your hiring challenge, to include the script that you've used to create this Timeboard.
 Used Postman to run a POST POST "https://api.datadoghq.com/api/v1/dashboard?app_key=04d117a9f3b1e1728cdf7738a20bc3062f2ff7d6&api_key=49514af82afd9cde0bd302ba37201f49"
-![Screenshot](https://www.dropbox.com/s/6cyt2byvj0z3yng/dashboard.PNG)
+![Screenshot](dashboard.png)
 Once this is created, access the Dashboard from your Dashboard List in the UI:
 
 * Set the Timeboard's timeframe to the past 5 minutes
 
 * Take a snapshot of this graph and use the @ notation to send it to yourself.
-![Screenshot](https://www.dropbox.com/s/q044p8q3k3ecml4/notify.PNG)
+![Screenshot](notify.png)
 
-![Screenshot](https://www.dropbox.com/s/npje1oxyhkrkc5h/dashboardPostman.PNG)
+![Screenshot](dashboardPostman.png)
 
 * **Bonus Question**: What is the Anomaly graph displaying?
 It is displaying the normal behaviour and it adapts over time. The more time is running, the more the algorith learns and can better identify anomalies
@@ -227,9 +227,9 @@ Please configure the monitor’s message so that it will:
 	}
 }
 ```
-![Screenshot](https://www.dropbox.com/s/8odu73dbkqvg0lz/monitor.png)
-![Screenshot] (https://www.dropbox.com/s/vl1pfwvrxgfof3d/monitorEmail.png)
-![Screenshot](https://www.dropbox.com/s/rfourlbhlmvjpt2/monitorUI.png)
+![Screenshot](monitor.png)
+![Screenshot] (monitorEmail.png)
+![Screenshot](monitorUI.png)
 
 * **Bonus Question**: Since this monitor is going to alert pretty often, you don’t want to be alerted when you are out of the office. Set up two scheduled downtimes for this monitor:
 
@@ -254,13 +254,13 @@ JSON Body:
   }
 }
 ```
-![Screenshot](https://www.dropbox.com/s/uyyq9gc7cwze1uh/downtime.png)
+![Screenshot](downtime.png)
 
 And one that silences it all day on Sat-Sun.
-![Screenshot](https://www.dropbox.com/s/8kz7nfh0ohrpqyc/downtimeweekend.png)
+![Screenshot](downtimeweekend.png)
 
 Make sure that your email is notified when you schedule the downtime and take a screenshot of that notification.
-![Screenshot](https://www.dropbox.com/s/8hs24ng830yj0tm/downtimeNotification.png)
+![Screenshot](downtimeNotification.png)
 
 ## Collecting APM Data:
 
@@ -314,14 +314,14 @@ And then run the instrumented application
 ddtrace-run python flask_app.py
 ```
 This is the screenshot of the flask application instrumented
-![Screenshot](https://www.dropbox.com/s/4bx3mzoktpmu3sx/flask.png)
+![Screenshot](flask.png)
 
 
 * **Bonus Question**: What is the difference between a Service and a Resource?
 A service, in a datadog context, is the application it self, composed by different elements like DB or app Server. and the resource is one single request or call 
 
 Provide a link and a screenshot of a Dashboard with both APM and Infrastructure Metrics.
-![Screenshot](https://www.dropbox.com/s/u2aisc9qem1zqdm/dashboardInfraAPM.png)
+![Screenshot](dashboardInfraAPM.png)
 
 
 Please include your fully instrumented app in your submission, as well.
