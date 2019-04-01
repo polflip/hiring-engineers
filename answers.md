@@ -122,7 +122,7 @@ init_config:
 instances:
  - min_collection_interval: 45
  ```
- ![Screenshot](changeinterval.png)
+ ![Screenshot](changeInterval.png)
  
  As a result, the metric appears on Metric Explorer:
  ![Screenshot](my_metricUI.png)
@@ -228,7 +228,7 @@ Please configure the monitor’s message so that it will:
 }
 ```
 ![Screenshot](monitor.png)
-![Screenshot] (monitorEmail.png)
+![Screenshot](monitorEmail.png)
 ![Screenshot](monitorUI.png)
 
 * **Bonus Question**: Since this monitor is going to alert pretty often, you don’t want to be alerted when you are out of the office. Set up two scheduled downtimes for this monitor:
