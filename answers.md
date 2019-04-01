@@ -13,7 +13,7 @@ tags:
    - test:polflip
    ```
    
-  ![Screenshot](https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.png)
+  ![Screenshot](tags.PNG)
   <img src="https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.PNG?dl=0" alt="tags">
   
 * Install a database on your machine (MongoDB, MySQL, or PostgreSQL) and then install the respective Datadog integration for that database.
