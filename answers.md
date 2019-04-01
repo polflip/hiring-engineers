@@ -14,7 +14,7 @@ tags:
    ```
    
   ![Screenshot](https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.png)
-  <img src="https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.PNG?dl=0">
+  <img src="https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.PNG?dl=0" alt="tags">
   
 * Install a database on your machine (MongoDB, MySQL, or PostgreSQL) and then install the respective Datadog integration for that database.
 I installed  postgreSQL directly with
