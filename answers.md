@@ -2,6 +2,8 @@
 ## Collecting Metrics:
 
 * Add tags in the Agent config file and show us a screenshot of your host and its tags on the Host Map page in Datadog.
+
+This is the modified part of the config file to add tags on the host. This helps to idetify and organize your hosts
 ```
 Set the host's tags (optional)
 tags:
@@ -11,10 +13,10 @@ tags:
    - test:polflip
    ```
    
-  ![Screenshot](https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.PNG)
+  ![Screenshot](https://www.dropbox.com/s/ibxtsvhmy78ks83/tags.png)
   
 * Install a database on your machine (MongoDB, MySQL, or PostgreSQL) and then install the respective Datadog integration for that database.
-I installed directly with
+I installed  postgreSQL directly with
 
 ```
 vagrant@ubuntu-xenial:~$ sudo apt-get install postgresql
@@ -82,6 +84,7 @@ instances:
       Average Execution Time : 29ms
 ```
 * Create a custom Agent check that submits a metric named my_metric with a random value between 0 and 1000.
+Lets create a metric with a random value. First I am going to create the check using random library
 ```
 /etc/datadog-agent/checks.d
 import random
@@ -103,6 +106,7 @@ class RandomCheck(AgentCheck):
 ```
  ![Screenshot](https://www.dropbox.com/s/4nlqgxty4ug4frf/my_metric.PNG?dl=0)   
 
+And then the YAML file
  ```
 /etc/datadog-agent/conf.d/my_check.yaml
 init_config:
@@ -111,6 +115,7 @@ instances:
  ```   
     
 * Change your check's collection interval so that it only submits the metric once every 45 seconds.
+This is easy to do on the YAML file
  ```
 init_config:
 instances:
@@ -126,8 +131,10 @@ Yes, this goes in the yaml file
 ## Visualizing Data:
 
 Utilize the Datadog API to create a Timeboard that contains:
+For this exercise I have used Postman to POST the API calls. Visualizing data is key on monitoring solutions, this is an easy way to create widgets to represent custom values
 
 * Your custom metric scoped over your host.
+This is the body:
  ```
 {
   "title" : "My_Excercise",
@@ -141,6 +148,7 @@ Utilize the Datadog API to create a Timeboard that contains:
     }},
  ```
 * Any metric from the Integration on your Database with the anomaly function applied.
+This is as well the body I have used on Postman
  ```
  {"definition": {
    "type": "timeseries",
@@ -218,9 +226,9 @@ Please configure the monitor’s message so that it will:
 	}
 }
 ```
-![Screenshot](https://www.dropbox.com/s/8odu73dbkqvg0lz/monitor.PNG?dl=0)
-![Screenshot] (https://www.dropbox.com/s/vl1pfwvrxgfof3d/monitorEmail.PNG?dl=0)
-![Screenshot](https://www.dropbox.com/s/rfourlbhlmvjpt2/monitorUI.PNG?dl=0)
+![Screenshot](https://www.dropbox.com/s/8odu73dbkqvg0lz/monitor.png)
+![Screenshot] (https://www.dropbox.com/s/vl1pfwvrxgfof3d/monitorEmail.png)
+![Screenshot](https://www.dropbox.com/s/rfourlbhlmvjpt2/monitorUI.png)
 
 * **Bonus Question**: Since this monitor is going to alert pretty often, you don’t want to be alerted when you are out of the office. Set up two scheduled downtimes for this monitor:
 
@@ -245,17 +253,18 @@ JSON Body:
   }
 }
 ```
-![Screenshot](https://www.dropbox.com/s/uyyq9gc7cwze1uh/downtime.PNG)
+![Screenshot](https://www.dropbox.com/s/uyyq9gc7cwze1uh/downtime.png)
 
 And one that silences it all day on Sat-Sun.
-![Screenshot](https://www.dropbox.com/s/8kz7nfh0ohrpqyc/downtimeweekend.PNG)
+![Screenshot](https://www.dropbox.com/s/8kz7nfh0ohrpqyc/downtimeweekend.png)
 
 Make sure that your email is notified when you schedule the downtime and take a screenshot of that notification.
-![Screenshot](https://www.dropbox.com/s/8hs24ng830yj0tm/downtimeNotification.PNG)
+![Screenshot](https://www.dropbox.com/s/8hs24ng830yj0tm/downtimeNotification.png)
 
 ## Collecting APM Data:
 
 Given the following Flask app (or any Python/Ruby/Go app of your choice) instrument this using Datadog’s APM solution:
+this is the simple way to monitor you application and collect information on how does it perform.
 
 ```python
 from flask import Flask
@@ -303,8 +312,8 @@ And then run the instrumented application
 ```
 ddtrace-run python flask_app.py
 ```
-This is the screenshot of the flask application
-![Screenshot](https://www.dropbox.com/s/4bx3mzoktpmu3sx/flask.PNG)
+This is the screenshot of the flask application instrumented
+![Screenshot](https://www.dropbox.com/s/4bx3mzoktpmu3sx/flask.png)
 
 
 * **Bonus Question**: What is the difference between a Service and a Resource?
